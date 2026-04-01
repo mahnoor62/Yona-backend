@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 // Load and validate all environment variables before anything else.
 const env = require('./src/config/env');
 const app = require('./src/app');
