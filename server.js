@@ -16,7 +16,6 @@ function shutdown(signal) {
     console.log('[server] HTTP server closed.');
     process.exit(0);
   });
-
   // Force exit after 10 seconds if graceful shutdown hangs.
   setTimeout(() => {
     console.error('[server] Forced exit after timeout.');
