@@ -12,6 +12,10 @@ const errorMiddleware = require('./middlewares/error.middleware');
 
 const app = express();
 
+// Trust the first proxy hop (required on Render, Heroku, Railway, etc.)
+// This lets express-rate-limit correctly identify clients via X-Forwarded-For.
+app.set('trust proxy', 1);
+
 // ─── Security Headers ─────────────────────────────────────────────────────────
 app.use(
   helmet({
