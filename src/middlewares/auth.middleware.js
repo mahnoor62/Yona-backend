@@ -10,11 +10,14 @@ const { errorResponse } = require('../utils/responses');
 async function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader) {
     return errorResponse(res, 'Authorization token required.', 401);
   }
 
-  const token = authHeader.slice(7);
+  // Accept both "Bearer <token>" and plain "<token>"
+  const token = authHeader.startsWith('Bearer ')
+    ? authHeader.slice(7)
+    : authHeader;
 
   if (!token) {
     return errorResponse(res, 'Authorization token required.', 401);

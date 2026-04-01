@@ -1,9 +1,8 @@
 'use strict';
 
 // Load and validate all environment variables before anything else.
-const env = require('./config/env');
-
-const app = require('./app');
+const env = require('./src/config/env');
+const app = require('./src/app');
 
 const server = app.listen(env.port, () => {
   console.log(`[server] Running on port ${env.port} (${env.nodeEnv})`);

@@ -191,9 +191,6 @@ async function signin({ login, email: emailField, username: usernameField, passw
     username: profile?.username ?? null,
     encrypted_password: profile?.password_hash ?? null,
     access_token: data.session.access_token,
-    refresh_token: data.session.refresh_token,
-    expires_in: data.session.expires_in,
-    token_type: data.session.token_type,
   };
 }
 
