@@ -1,0 +1,38 @@
+'use strict';
+
+// Load and validate all environment variables before anything else.
+const env = require('./config/env');
+
+const app = require('./app');
+
+const server = app.listen(env.port, () => {
+  console.log(`[server] Running on port ${env.port} (${env.nodeEnv})`);
+  console.log(`[server] Base URL: ${env.appBaseUrl}`);
+});
+
+// Graceful shutdown
+function shutdown(signal) {
+  console.log(`[server] Received ${signal}. Shutting down gracefully…`);
+  server.close(() => {
+    console.log('[server] HTTP server closed.');
+    process.exit(0);
+  });
+
+  // Force exit after 10 seconds if graceful shutdown hangs.
+  setTimeout(() => {
+    console.error('[server] Forced exit after timeout.');
+    process.exit(1);
+  }, 10_000).unref();
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[server] Unhandled rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[server] Uncaught exception:', err);
+  process.exit(1);
+});
