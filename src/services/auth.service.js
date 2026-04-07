@@ -161,10 +161,16 @@ async function signin({ login, email: emailField, username: usernameField, passw
   let email;
 
   if (identifier.includes('@')) {
-    email = identifier;
+    const profile = await userService.getUserByEmail(identifier);
+    if (!profile) {
+      throw createHttpError('User does not exist. Please sign up.', 404);
+    }
+    email = profile.email;
   } else {
     const profile = await userService.getUserByUsername(identifier);
-    if (!profile) throw createHttpError('Invalid credentials.', 401);
+    if (!profile) {
+      throw createHttpError('User does not exist. Please sign up.', 404);
+    }
     email = profile.email;
   }
 
