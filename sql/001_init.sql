@@ -14,12 +14,12 @@ create table if not exists public.profiles (
   username        text        not null unique,
   email           text        not null unique,
   is_verified     boolean     not null default false,
-  avatar_body     integer     not null default 0,
-  avatar_hairstyle integer    not null default 0,
-  avatar_head     integer     not null default 0,
-  avatar_top      integer     not null default 0,
-  avatar_bottom   integer     not null default 0,
-  avatar_shoes    integer     not null default 0,
+  avatar_body     text        not null default '0',
+  avatar_hairstyle text       not null default '0',
+  avatar_head     text        not null default '0',
+  avatar_top      text        not null default '0',
+  avatar_bottom   text        not null default '0',
+  avatar_shoes    text        not null default '0',
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now()
 );
@@ -28,16 +28,6 @@ create table if not exists public.profiles (
 alter table public.profiles
   add constraint profiles_username_lowercase check (username = lower(username)),
   add constraint profiles_email_lowercase    check (email    = lower(email));
-
--- Avatar values must be non-negative.
-alter table public.profiles
-  add constraint profiles_avatar_body_nn     check (avatar_body     >= 0),
-  add constraint profiles_avatar_hairstyle_nn check (avatar_hairstyle >= 0),
-  add constraint profiles_avatar_head_nn     check (avatar_head     >= 0),
-  add constraint profiles_avatar_top_nn      check (avatar_top      >= 0),
-  add constraint profiles_avatar_bottom_nn   check (avatar_bottom   >= 0),
-  add constraint profiles_avatar_shoes_nn    check (avatar_shoes    >= 0);
-
 
 -- ─── updated_at auto-trigger ──────────────────────────────────────────────────
 
@@ -133,3 +123,14 @@ create policy "profiles: update own"
 -- =============================================================================
 -- alter table public.profiles
 --   add column if not exists is_verified boolean not null default false;
+
+-- =============================================================================
+-- Run this separately to switch avatar columns from integer to text.
+-- =============================================================================
+-- alter table public.profiles
+--   alter column avatar_body type text using avatar_body::text,
+--   alter column avatar_hairstyle type text using avatar_hairstyle::text,
+--   alter column avatar_head type text using avatar_head::text,
+--   alter column avatar_top type text using avatar_top::text,
+--   alter column avatar_bottom type text using avatar_bottom::text,
+--   alter column avatar_shoes type text using avatar_shoes::text;

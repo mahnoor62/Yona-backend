@@ -87,8 +87,13 @@ function validateAvatar({ body, hairstyle, head, top, bottom, shoes } = {}) {
   for (const [key, value] of Object.entries(fields)) {
     if (value === undefined || value === null) {
       errors.push(`${key} is required.`);
-    } else if (!Number.isInteger(value) || value < 0) {
-      errors.push(`${key} must be a non-negative integer.`);
+      continue;
+    }
+
+    // Avatar values are now stored as strings.
+    const normalized = String(value).trim();
+    if (!normalized) {
+      errors.push(`${key} must be a non-empty string.`);
     }
   }
 

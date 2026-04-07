@@ -32,12 +32,12 @@ async function setAvatar(req, res, next) {
   try {
     const { body, hairstyle, head, top, bottom, shoes } = req.body;
     const updated = await userService.updateAvatar(req.user.id, {
-      body,
-      hairstyle,
-      head,
-      top,
-      bottom,
-      shoes,
+      body: String(body).trim(),
+      hairstyle: String(hairstyle).trim(),
+      head: String(head).trim(),
+      top: String(top).trim(),
+      bottom: String(bottom).trim(),
+      shoes: String(shoes).trim(),
     });
 
     return successResponse(res, 'Avatar updated.', {
