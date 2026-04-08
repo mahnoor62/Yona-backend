@@ -31,7 +31,7 @@ async function getAvatar(req, res, next) {
 async function setAvatar(req, res, next) {
   try {
     const { body, hairstyle, head, top, bottom, shoes } = req.body;
-    const updated = await userService.updateAvatar(req.user.id, {
+    await userService.updateAvatar(req.user.id, {
       body: String(body).trim(),
       hairstyle: String(hairstyle).trim(),
       head: String(head).trim(),
@@ -39,6 +39,12 @@ async function setAvatar(req, res, next) {
       bottom: String(bottom).trim(),
       shoes: String(shoes).trim(),
     });
+
+    // Fetch again to ensure response always reflects persisted DB state.
+    const updated = await userService.getProfileById(req.user.id);
+    if (!updated) {
+      return errorResponse(res, 'Profile not found.', 404);
+    }
 
     return successResponse(res, 'Avatar updated.', {
       body: updated.avatar_body,

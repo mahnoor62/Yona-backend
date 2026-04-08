@@ -73,9 +73,10 @@ async function updateAvatar(userId, { body, hairstyle, head, top, bottom, shoes 
     })
     .eq('id', userId)
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) throw new Error(`Failed to update avatar: ${error.message}`);
+  if (!data) throw new Error('Profile not found for avatar update.');
   return data;
 }
 
