@@ -1,0 +1,6 @@
+{
+  "code": "BID_TOO_LOW",
+  "message": "Bid must be at least 800 YON.",
+  "details": null,
+  "timestamp": "2025-04-03T19:01:11Z"
+}

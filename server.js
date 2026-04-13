@@ -1,10 +1,23 @@
 'use strict';
 require('dotenv').config();
 // Load and validate all environment variables before anything else.
+const http = require('http');
+const { Server } = require('socket.io');
 const env = require('./src/config/env');
 const app = require('./src/app');
+const { registerBuildingSockets } = require('./src/sockets/building.socket');
 
-const server = app.listen(env.port, () => {
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: ['GET', 'POST'],
+  },
+});
+
+registerBuildingSockets(io);
+
+const server = httpServer.listen(env.port, () => {
   console.log(`[server] Running on port ${env.port} (${env.nodeEnv})`);
   console.log(`[server] Base URL: ${env.appBaseUrl}`);
 });
@@ -12,9 +25,12 @@ const server = app.listen(env.port, () => {
 // Graceful shutdown
 function shutdown(signal) {
   console.log(`[server] Received ${signal}. Shutting down gracefully…`);
-  server.close(() => {
-    console.log('[server] HTTP server closed.');
-    process.exit(0);
+  io.close(() => {
+    console.log('[server] Socket.IO closed.');
+    server.close(() => {
+      console.log('[server] HTTP server closed.');
+      process.exit(0);
+    });
   });
   // Force exit after 10 seconds if graceful shutdown hangs.
   setTimeout(() => {

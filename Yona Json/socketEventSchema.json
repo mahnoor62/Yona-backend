@@ -1,0 +1,120 @@
+{
+  "//": "Socket event schema for Unity frontend <-> NodeJS backend",
+  "//": "Use this as a reference for the JSON objects sent and received via socket.io or raw websocket frames",
+
+  "events": {
+    "clientToServer": {
+      "playerJoin": {
+        "description": "Player connects/logs in",
+        "payload": {
+          "playerId": "player_u7x9",
+          "username": "Alex",
+          "socketId": "sio_xk2p9m",
+          "timestamp": "2025-04-03T19:00:00Z"
+        }
+      },
+      "placeBid": {
+        "description": "New bid by a player",
+        "payload": {
+          "buildingName": "NexusFinanceTower",
+          "playerId": "player_u7x9",
+          "amount": 3200,
+          "timestamp": "2025-04-03T19:01:10Z"
+        }
+      },
+      "increaseBid": {
+        "description": "Player increases their existing bid",
+        "payload": {
+          "buildingName": "NexusFinanceTower",
+          "playerId": "player_u7x9",
+          "additionalAmount": 800,
+          "newTotalStake": 4000,
+          "timestamp": "2025-04-03T19:04:05Z"
+        }
+      },
+      "withdrawBid": {
+        "description": "Player withdraws a bid",
+        "payload": {
+          "buildingName": "NexusFinanceTower",
+          "playerId": "player_u7x9",
+          "withdrawAmount": 1200,
+          "timestamp": "2025-04-03T19:10:20Z"
+        }
+      },
+      "requestPlayerData": {
+        "description": "Client asks for latest player info",
+        "payload": { "playerId": "player_u7x9" }
+      },
+      "requestBuildingData": {
+        "description": "Client asks for current building data",
+        "payload": { "buildingName": "NexusFinanceTower" }
+      }
+    },
+
+    "serverToClient": {
+      "playerJoined": {
+        "description": "Acknowledge player joined",
+        "payload": {
+          "playerId": "player_u7x9",
+          "status": "connected",
+          "activeTowerStakes": ["tower_alpha_01","tower_delta_03"]
+        }
+      },
+      "bidResult": {
+        "description": "Server result for place/increase/withdraw bid",
+        "payload": {
+          "buildingName": "NexusFinanceTower",
+          "playerId": "player_u7x9",
+          "type": "overbid", // first_bid|overbid|self_increase|withdrawal
+          "amount": 3200,
+          "totalStake": 3200,
+          "isLeader": true,
+          "snipeTriggered": false,
+          "extensionMinutes": 0,
+          "withdrawalFee": null,
+          "refundAmount": null,
+          "timestamp": "2025-04-03T19:01:10Z"
+        }
+      },
+      "buildingUpdate": {
+        "description": "Broadcast when a building state changes",
+        "payload": {
+          "buildingName": "NexusFinanceTower",
+          "rewardValue": 8000,
+          "minBuyIn": 800,
+          "capValue": 16000,
+          "state": "surgeState",
+          "status": "active",
+          "lastBidAt": "2025-04-03T19:01:10Z",
+          "currentBids": {
+            "player_u7x9": 3200,
+            "plsadyer_u7x9": 1200
+          }
+        }
+      },
+      "playerWalletUpdate": {
+        "description": "Update player wallet data after a transaction",
+        "payload": {
+          "playerId": "player_u7x9",
+          "availableYona": 1800,
+          "investedYona": 3200,
+          "totalYona": 5000,
+          "lockedStakes": {
+            "tower_alpha_01": 3200,
+            "tower_delta_03": 0
+          },
+          "lastUpdatedAt": "2025-04-03T19:01:12Z"
+        }
+      },
+      "error": {
+        "description": "Server returns error info",
+        "payload": {
+          "code": "BID_TOO_LOW",
+          "message": "Bid must be at least 800 YON.",
+          "details": null,
+          "timestamp": "2025-04-03T19:01:11Z"
+        }
+      }
+    }
+  }
+}

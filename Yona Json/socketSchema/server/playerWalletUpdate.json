@@ -1,0 +1,11 @@
+{
+  "playerId": "player_u7x9",
+  "availableYona": 1800,
+  "investedYona": 3200,
+  "totalYona": 5000,
+  "lockedStakes": {
+    "tower_alpha_01": 3200,
+    "tower_delta_03": 0
+  },
+  "lastUpdatedAt": "2025-04-03T19:01:12Z"
+}

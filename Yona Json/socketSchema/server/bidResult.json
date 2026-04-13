@@ -1,0 +1,13 @@
+{
+  "buildingName": "NexusFinanceTower",
+  "playerId": "player_u7x9",
+  "type": "overbid",
+  "amount": 3200,
+  "totalStake": 3200,
+  "isLeader": true,
+  "snipeTriggered": false,
+  "extensionMinutes": 0,
+  "withdrawalFee": null,
+  "refundAmount": null,
+  "timestamp": "2025-04-03T19:01:10Z"
+}

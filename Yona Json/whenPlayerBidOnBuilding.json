@@ -1,0 +1,23 @@
+// ye data receive ho ga jab user kisi building pe bid karega, ya apni existing bid increase karega, ya bid withdraw karega
+
+
+
+{
+  "buildingName": "NexusFinanceTower",
+  "username": "player_m3p1",
+
+  "type": "first_bid",
+  // "first_bid" | "overbid" | "self_increase" | "withdrawal"
+
+  "amount":       3200,     // YON added in this action
+  "totalStake":   3200,     // player's cumulative stake after action
+  "isLeader":     true,
+  "timestamp":    "2025-04-01T10:22:00Z",
+
+  "snipeTriggered": false,  // true if timer was extended
+  "extensionMinutes":   0,     // 60 if anti-snipe fired
+
+  "withdrawalFee": null,         // set on withdrawal: 0.05 or 0.20
+  "refundAmount":  null          // set on withdrawal
+}
+

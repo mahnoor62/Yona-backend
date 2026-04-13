@@ -1,0 +1,13 @@
+{
+  "buildingName": "NexusFinanceTower",
+  "rewardValue": 8000,
+  "minBuyIn": 800,
+  "capValue": 16000,
+  "state": "surgeState",
+  "status": "active",
+  "lastBidAt": "2025-04-03T19:01:10Z",
+  "currentBids": {
+    "player_u7x9": 3200,
+    "plsadyer_u7x9": 1200
+  }
+}
