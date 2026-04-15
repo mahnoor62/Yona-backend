@@ -10,8 +10,9 @@ const { registerBuildingSockets } = require('./src/sockets/building.socket');
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CORS_ORIGIN || '*',
-    methods: ['GET', 'POST'],
+    origin:'*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['*'],
   },
 });
 
